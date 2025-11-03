@@ -6,16 +6,63 @@ export function initializeEventHandlers(
   todosArr,
   saveTodos,
   render,
+  editDialog,
 ) {
-  // Delete button event
+  // Buttons events
+  let currentIndex = null;
   content.addEventListener("click", function (e) {
-    if (e.target.classList.contains("delete-button")) {
-      const index = e.target.dataset.buttonIndex;
+    // Delete button
+    if (e.target.classList.contains("todo-delete-button")) {
+      const index = e.target.dataset.deleteButtonIndex;
 
       // Remove from array, makes changes in local storage and display
       todosArr.splice(parseInt(index), 1);
       saveTodos(todosArr);
       render(content, todosArr);
+    }
+
+    // Edit button
+    if (e.target.classList.contains("todo-edit-button")) {
+      const index = e.target.dataset.editButtonIndex;
+      currentIndex = index;
+      const dialog = document.getElementById("todo-edit-dialog");
+
+      // Prefill dialog with todo data
+      const title = document.getElementById("todo-dialog-title");
+      const description = document.getElementById("todo-dialog-description");
+      const date = document.getElementById("todo-dialog-date");
+      const priority = document.getElementById("todo-dialog-priority");
+
+      title.value = todosArr[index].title;
+      description.value = todosArr[index].description;
+      date.value = todosArr[index].dueDate;
+      priority.value = todosArr[index].priority;
+
+      // Display dialog
+      dialog.showModal();
+    }
+  });
+
+  // Dialog modal events
+  editDialog.addEventListener("click", function (e) {
+    // Cancel button
+    if (e.target.classList.contains("todo-dialog-cancel-button")) {
+      editDialog.close();
+    }
+
+    // Save button
+    if (e.target.classList.contains("todo-dialog-save-button")) {
+      // Get todo values from dialog input and change them
+      const title = document.getElementById("todo-dialog-title").value;
+      const description = document.getElementById(
+        "todo-dialog-description",
+      ).value;
+      const date = document.getElementById("todo-dialog-date").value;
+      const priority = document.getElementById("todo-dialog-priority").value;
+      todosArr[currentIndex].changeTodo(title, description, date, priority);
+      saveTodos(todosArr);
+      render(content, todosArr);
+      editDialog.close();
     }
   });
 
@@ -39,7 +86,7 @@ export function initializeEventHandlers(
 
   // Checkbox toggle event
   content.addEventListener("change", function (e) {
-    if (e.target.classList.contains("status-checkbox")) {
+    if (e.target.classList.contains("todo-status-checkbox")) {
       const index = e.target.dataset.checkboxIndex;
 
       todosArr[index].toggleCompleted();

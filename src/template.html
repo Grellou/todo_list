@@ -18,6 +18,24 @@
       <input type="text" name="todo-priority" id="todo-priority" />
       <button type="submit">Submit</button>
     </form>
+    <dialog id="todo-edit-dialog">
+      <form method="dialog">
+        <label for="todo-title">Title:</label>
+        <input type="text" name="todo-title" id="todo-dialog-title" />
+        <label for="todo-description">Description:</label>
+        <input
+          type="text"
+          name="todo-description"
+          id="todo-dialog-description"
+        />
+        <label for="todo-date">Date:</label>
+        <input type="date" name="todo-date" id="todo-dialog-date" />
+        <label for="todo-priority">Priority:</label>
+        <input type="text" name="todo-priority" id="todo-dialog-priority" />
+        <button type="button" class="todo-dialog-save-button">Save</button>
+        <button type="button" class="todo-dialog-cancel-button">Cancel</button>
+      </form>
+    </dialog>
     <div id="todo-content"></div>
   </body>
 </html>

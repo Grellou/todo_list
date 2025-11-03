@@ -9,18 +9,18 @@ export function loadTodos() {
   const todosFromStorage = localStorage.getItem("todos");
   if (todosFromStorage) {
     try {
-      const plainTodo = JSON.parse(todosFromStorage);
-      const instanceTodo = plainTodo.map((obj) => {
-        const objTodo = new Todo(
+      const plainTodos = JSON.parse(todosFromStorage);
+      const todoInstances = plainTodos.map((obj) => {
+        const todo = new Todo(
           obj.title,
           obj.description,
           obj.dueDate,
           obj.priority,
         );
-        objTodo.completed = obj.completed;
-        return objTodo;
+        todo.completed = obj.completed;
+        return todo;
       });
-      return instanceTodo;
+      return todoInstances;
     } catch (error) {
       console.log("Error loading todos");
       return [];
