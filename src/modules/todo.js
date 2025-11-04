@@ -10,11 +10,4 @@ export class Todo {
   toggleCompleted() {
     this.completed = !this.completed;
   }
-
-  changeTodo(newTitle, newDescription, newDueDate, newPriority) {
-    this.title = newTitle;
-    this.description = newDescription;
-    this.dueDate = newDueDate;
-    this.priority = newPriority;
-  }
 }

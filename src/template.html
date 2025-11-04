@@ -15,7 +15,11 @@
       <label for="todo-date">Date:</label>
       <input type="date" name="todo-date" id="todo-date" />
       <label for="todo-priority">Priority:</label>
-      <input type="text" name="todo-priority" id="todo-priority" />
+      <select name="todo-priority" id="todo-priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
       <button type="submit">Submit</button>
     </form>
     <dialog id="todo-edit-dialog">
@@ -31,7 +35,11 @@
         <label for="todo-date">Date:</label>
         <input type="date" name="todo-date" id="todo-dialog-date" />
         <label for="todo-priority">Priority:</label>
-        <input type="text" name="todo-priority" id="todo-dialog-priority" />
+        <select name="todo-priority" id="todo-dialog-priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
         <button type="button" class="todo-dialog-save-button">Save</button>
         <button type="button" class="todo-dialog-cancel-button">Cancel</button>
       </form>

@@ -24,7 +24,7 @@ export function initializeEventHandlers(
     // Edit button
     if (e.target.classList.contains("todo-edit-button")) {
       const index = e.target.dataset.editButtonIndex;
-      currentIndex = index;
+      currentIndex = parseInt(index);
       const dialog = document.getElementById("todo-edit-dialog");
 
       // Prefill dialog with todo data
@@ -59,7 +59,10 @@ export function initializeEventHandlers(
       ).value;
       const date = document.getElementById("todo-dialog-date").value;
       const priority = document.getElementById("todo-dialog-priority").value;
-      todosArr[currentIndex].changeTodo(title, description, date, priority);
+      todosArr[currentIndex].title = title;
+      todosArr[currentIndex].description = description;
+      todosArr[currentIndex].dueDate = date;
+      todosArr[currentIndex].priority = priority;
       saveTodos(todosArr);
       render(content, todosArr);
       editDialog.close();
