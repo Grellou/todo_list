@@ -1,6 +1,18 @@
-.todo-container {
-  display: flex;
-  flex-direction: column;
+.container {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: "projects-main-container todo-main-container";
+}
+
+.projects-main-container {
+  grid-area: projects-main-container;
+  border: 1px solid black;
+}
+
+.todo-main-container {
+  grid-area: todo-main-container;
   border: 1px solid black;
 }
 

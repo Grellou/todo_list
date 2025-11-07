@@ -3,11 +3,21 @@ import { Todo } from "../modules/todo.js";
 export function initializeEventHandlers(
   content,
   form,
-  todosArr,
-  saveTodos,
+  projectsArr,
+  saveProjects,
   render,
   editDialog,
+  activeProjectId,
 ) {
+  // Helper to get active project
+  function getActiveProject() {
+    for (let i = 0; i < projectsArr.length; i++) {
+      if (projectsArr[i].id === activeProjectId) {
+        return projectsArr[i];
+      }
+    }
+    return projectsArr[0];
+  }
   // Buttons events
   let currentIndex = null;
   content.addEventListener("click", function (e) {
@@ -15,16 +25,24 @@ export function initializeEventHandlers(
     if (e.target.classList.contains("todo-delete-button")) {
       const index = e.target.dataset.deleteButtonIndex;
 
-      // Remove from array, makes changes in local storage and display
-      todosArr.splice(parseInt(index), 1);
-      saveTodos(todosArr);
-      render(content, todosArr);
+      // Find active project
+      const activeProject = getActiveProject();
+
+      // Remove from project, makes changes in local storage and display
+      activeProject.removeTodo(activeProject.todos[index]);
+      saveProjects(projectsArr);
+      render(content, activeProject.todos);
     }
 
     // Edit button
     if (e.target.classList.contains("todo-edit-button")) {
       const index = e.target.dataset.editButtonIndex;
       currentIndex = parseInt(index);
+
+      // Find active project
+      const activeProject = getActiveProject();
+
+      // Get dialog to display it
       const dialog = document.getElementById("todo-edit-dialog");
 
       // Prefill dialog with todo data
@@ -33,10 +51,10 @@ export function initializeEventHandlers(
       const date = document.getElementById("todo-dialog-date");
       const priority = document.getElementById("todo-dialog-priority");
 
-      title.value = todosArr[index].title;
-      description.value = todosArr[index].description;
-      date.value = todosArr[index].dueDate;
-      priority.value = todosArr[index].priority;
+      title.value = activeProject.todos[index].title;
+      description.value = activeProject.todos[index].description;
+      date.value = activeProject.todos[index].dueDate;
+      priority.value = activeProject.todos[index].priority;
 
       // Display dialog
       dialog.showModal();
@@ -52,6 +70,9 @@ export function initializeEventHandlers(
 
     // Save button
     if (e.target.classList.contains("todo-dialog-save-button")) {
+      // Find active project
+      const activeProject = getActiveProject();
+
       // Get todo values from dialog input and change them
       const title = document.getElementById("todo-dialog-title").value;
       const description = document.getElementById(
@@ -59,12 +80,12 @@ export function initializeEventHandlers(
       ).value;
       const date = document.getElementById("todo-dialog-date").value;
       const priority = document.getElementById("todo-dialog-priority").value;
-      todosArr[currentIndex].title = title;
-      todosArr[currentIndex].description = description;
-      todosArr[currentIndex].dueDate = date;
-      todosArr[currentIndex].priority = priority;
-      saveTodos(todosArr);
-      render(content, todosArr);
+      activeProject.todos[currentIndex].title = title;
+      activeProject.todos[currentIndex].description = description;
+      activeProject.todos[currentIndex].dueDate = date;
+      activeProject.todos[currentIndex].priority = priority;
+      saveProjects(projectsArr);
+      render(content, activeProject.todos);
       editDialog.close();
     }
   });
@@ -78,12 +99,15 @@ export function initializeEventHandlers(
     const priority = document.getElementById("todo-priority").value;
     const todo = new Todo(title, description, date, priority);
 
-    // Add to array and local storage
-    todosArr.push(todo);
-    saveTodos(todosArr);
+    // Find active project and add todos to it
+    const activeProject = getActiveProject();
+    activeProject.addTodo(todo);
 
-    // Display and reset form
-    render(content, todosArr);
+    // Save projects
+    saveProjects(projectsArr);
+
+    // Display active projects todos and reset form
+    render(content, activeProject.todos);
     form.reset();
   });
 
@@ -92,9 +116,13 @@ export function initializeEventHandlers(
     if (e.target.classList.contains("todo-status-checkbox")) {
       const index = e.target.dataset.checkboxIndex;
 
-      todosArr[index].toggleCompleted();
-      saveTodos(todosArr);
-      render(content, todosArr);
+      // Find active project
+      const activeProject = getActiveProject();
+
+      activeProject.todos[index].toggleCompleted();
+      saveProjects(projectsArr);
+
+      render(content, activeProject.todos);
     }
   });
 }

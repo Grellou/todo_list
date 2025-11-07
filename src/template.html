@@ -6,22 +6,7 @@
     <title></title>
   </head>
   <body>
-    <header>Todo App</header>
-    <form id="todo-form">
-      <label for="todo-title">Title:</label>
-      <input type="text" name="todo-title" id="todo-title" />
-      <label for="todo-description">Description:</label>
-      <input type="text" name="todo-description" id="todo-description" />
-      <label for="todo-date">Date:</label>
-      <input type="date" name="todo-date" id="todo-date" />
-      <label for="todo-priority">Priority:</label>
-      <select name="todo-priority" id="todo-priority">
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
-      <button type="submit">Submit</button>
-    </form>
+    <!-- EDIT TODO POPUP -->
     <dialog id="todo-edit-dialog">
       <form method="dialog">
         <label for="todo-title">Title:</label>
@@ -44,6 +29,41 @@
         <button type="button" class="todo-dialog-cancel-button">Cancel</button>
       </form>
     </dialog>
-    <div id="todo-content"></div>
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+      <!-- PROJECTS CONTAINER -->
+      <div class="projects-main-container">
+        <div id="projects-content"></div>
+        <button
+          type="button"
+          class="projects-add-new-button"
+          id="projects-add-new-button"
+        >
+          Add Project
+        </button>
+      </div>
+
+      <!-- TODO CONTAINER -->
+      <div class="todo-main-container">
+        <!-- TODO FORM -->
+        <form id="todo-form">
+          <label for="todo-title">Title:</label>
+          <input type="text" name="todo-title" id="todo-title" />
+          <label for="todo-description">Description:</label>
+          <input type="text" name="todo-description" id="todo-description" />
+          <label for="todo-date">Date:</label>
+          <input type="date" name="todo-date" id="todo-date" />
+          <label for="todo-priority">Priority:</label>
+          <select name="todo-priority" id="todo-priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+          <button type="submit">Submit</button>
+        </form>
+        <!-- TODO CONTENT -->
+        <div id="todo-content"></div>
+      </div>
+    </div>
   </body>
 </html>

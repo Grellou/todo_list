@@ -68,3 +68,24 @@ export function render(content, todosArr) {
     content.appendChild(todoDiv);
   }
 }
+
+export function renderProjects(projectsContent, projectsArr, activeProjectId) {
+  // Clear projects content
+  projectsContent.textContent = "";
+
+  // Loop through projects
+  for (let i = 0; i < projectsArr.length; i++) {
+    // Create elements
+    const projectDiv = document.createElement("div");
+    const projectName = document.createElement("div");
+
+    // Set content
+    projectDiv.setAttribute("class", "project-container");
+    projectDiv.setAttribute("data-project-id", projectsArr[i].id);
+    projectName.setAttribute("class", "project-name");
+    projectName.textContent = projectsArr[i].name;
+  }
+  // Append to content
+  projectDiv.append(projectName);
+  projectsContent.appendChild(projectDiv);
+}
