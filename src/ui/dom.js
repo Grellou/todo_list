@@ -2,6 +2,15 @@ export function render(content, todosArr) {
   // Clear content
   content.textContent = "";
 
+  // Empty state - no todos
+  if (todosArr.length === 0) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.className = "empty-state";
+    emptyMessage.textContent = "📝 No todos yet. Add one above to get started!";
+    content.appendChild(emptyMessage);
+    return;
+  }
+
   // Loop through todos
   for (let i = 0; i < todosArr.length; i++) {
     // Create elements
@@ -17,13 +26,13 @@ export function render(content, todosArr) {
     // Set content div
     todoDiv.setAttribute("class", "todo-container");
     todoTitle.setAttribute("class", "todo-title");
-    todoTitle.textContent = `Title: ${todosArr[i].title}`;
+    todoTitle.textContent = todosArr[i].title;
     todoDescription.setAttribute("class", "todo-description");
-    todoDescription.textContent = `Description: ${todosArr[i].description}`;
+    todoDescription.textContent = todosArr[i].description;
     todoDueDate.setAttribute("class", "todo-due-date");
-    todoDueDate.textContent = `Due date: ${todosArr[i].dueDate}`;
+    todoDueDate.textContent = `📅 ${todosArr[i].dueDate}`;
     todoPriority.setAttribute("class", "todo-priority");
-    todoPriority.textContent = `Priority: ${todosArr[i].priority}`;
+    todoPriority.textContent = todosArr[i].priority;
 
     // Set delete button
     deleteButton.textContent = "Delete";
@@ -79,11 +88,14 @@ export function renderProjects(projectsContent, projectsArr, activeProjectId) {
     const projectDiv = document.createElement("div");
     const projectName = document.createElement("div");
 
+    // Count todos in project
+    const todoCount = projectsArr[i].todos.length;
+
     // Set content
     projectDiv.setAttribute("class", "project-container");
     projectDiv.setAttribute("data-project-id", projectsArr[i].id);
     projectName.setAttribute("class", "project-name");
-    projectName.textContent = projectsArr[i].name;
+    projectName.textContent = `${projectsArr[i].name} (${todoCount})`;
 
     // Check if added project is active
     if (projectsArr[i].id === activeProjectId) {
