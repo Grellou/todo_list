@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const projectsContent = document.getElementById("projects-content");
   const form = document.getElementById("todo-form");
   const editDialog = document.getElementById("todo-edit-dialog");
+  const newProjectForm = document.getElementById("new-project-form");
 
   // Load projects with todos
   const projectsArr = loadProjects();
@@ -16,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Track active project
   let activeProjectId = projectsArr[0].id;
 
-  // Helper to get active project
+  // Get active project
   function getActiveProject() {
     for (let i = 0; i < projectsArr.length; i++) {
       if (projectsArr[i].id === activeProjectId) {
@@ -24,6 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
     return projectsArr[0];
+  }
+
+  // Change active project
+  function switchProject(newProjectId) {
+    activeProjectId = newProjectId;
+    render(content, getActiveProject().todos);
+    renderProjects(projectsContent, projectsArr, activeProjectId);
   }
 
   // Call event handlers
@@ -34,7 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
     saveProjects,
     render,
     editDialog,
-    activeProjectId,
+    getActiveProject,
+    switchProject,
+    projectsContent,
+    renderProjects,
+    newProjectForm,
   );
 
   // Display

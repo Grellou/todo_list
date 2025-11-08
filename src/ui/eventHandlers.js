@@ -1,4 +1,5 @@
 import { Todo } from "../modules/todo.js";
+import { Project } from "../modules/project.js";
 
 export function initializeEventHandlers(
   content,
@@ -7,17 +8,12 @@ export function initializeEventHandlers(
   saveProjects,
   render,
   editDialog,
-  activeProjectId,
+  getActiveProject,
+  switchProject,
+  projectsContent,
+  renderProjects,
+  newProjectForm,
 ) {
-  // Helper to get active project
-  function getActiveProject() {
-    for (let i = 0; i < projectsArr.length; i++) {
-      if (projectsArr[i].id === activeProjectId) {
-        return projectsArr[i];
-      }
-    }
-    return projectsArr[0];
-  }
   // Buttons events
   let currentIndex = null;
   content.addEventListener("click", function (e) {
@@ -124,5 +120,35 @@ export function initializeEventHandlers(
 
       render(content, activeProject.todos);
     }
+  });
+
+  // Project swiching event
+  projectsContent.addEventListener("click", function (e) {
+    const projectDiv = e.target.closest(".project-container");
+
+    // Return if clicked outside of project
+    if (!projectDiv) {
+      return;
+    }
+
+    // Get ID and switch
+    const projectId = parseInt(projectDiv.dataset.projectId);
+    switchProject(projectId);
+  });
+
+  // New project handling
+  newProjectForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Create new project object
+    const projectName = document.getElementById("new-project-name").value;
+    const projectId = Date.now();
+    const newProject = new Project(projectId, projectName);
+
+    // Add to array, save, switch and clear form
+    projectsArr.push(newProject);
+    saveProjects(projectsArr);
+    switchProject(projectId);
+    newProjectForm.reset();
   });
 }

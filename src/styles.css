@@ -6,11 +6,44 @@
   grid-template-areas: "projects-main-container todo-main-container";
 }
 
+/* PROJECTS */
 .projects-main-container {
   grid-area: projects-main-container;
   border: 1px solid black;
 }
 
+.project-container {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.project-container.active {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.project-container:hover {
+  background-color: #f0f0f0;
+}
+
+#new-project-form {
+  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+#new-project-name {
+  width: 70%;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+#new-project-form button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* TODOS */
 .todo-main-container {
   grid-area: todo-main-container;
   border: 1px solid black;

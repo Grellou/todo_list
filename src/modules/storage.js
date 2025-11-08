@@ -70,7 +70,7 @@ export function loadProjects() {
       return projectInstances;
     } catch (error) {
       console.log("Error loading projects");
-      const defaultProject = Project(1, "default");
+      const defaultProject = new Project(1, "default");
       return [defaultProject];
     }
   }

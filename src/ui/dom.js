@@ -84,8 +84,14 @@ export function renderProjects(projectsContent, projectsArr, activeProjectId) {
     projectDiv.setAttribute("data-project-id", projectsArr[i].id);
     projectName.setAttribute("class", "project-name");
     projectName.textContent = projectsArr[i].name;
+
+    // Check if added project is active
+    if (projectsArr[i].id === activeProjectId) {
+      projectDiv.classList.add("active");
+    }
+
+    // Append to content
+    projectDiv.append(projectName);
+    projectsContent.appendChild(projectDiv);
   }
-  // Append to content
-  projectDiv.append(projectName);
-  projectsContent.appendChild(projectDiv);
 }
